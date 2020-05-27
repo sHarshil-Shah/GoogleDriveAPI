@@ -1,0 +1,4 @@
+{
+    "folder_name": "DATA2020",
+    "path":  "E:\\STUDY\\Project\\temp"
+}
