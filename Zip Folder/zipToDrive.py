@@ -12,16 +12,20 @@ import zipfile
 from apiclient import errors
 from datetime import datetime
 import shutil
+# import socket
+
+now = datetime.now()
 
 with open('configuration.txt') as json_file:
     configList = json.load(json_file)
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
-folder_name = configList.get('folder_name')     # "folder_name": "DATA2020"
+folder_name = "DATA " + str(now.year) #configList.get('folder_name')     # "DATA 2020"
+folder_name_without_space = "DATA" + str(now.year) # DATA2020
 directory = configList.get('folder_path') # "directory":  "E:\\STUDY\\Project\\zipdownload"
 folder_absolute_path = directory + '\\' + folder_name # "E:\\STUDY\\Project\\zipdownload\\DATA2020"
 zip_path = configList.get('zip_path')
-zip_name = folder_name + '.zip'
+zip_name = folder_name_without_space + '.zip'
 zip_absolute_path = zip_path + '\\' + zip_name 
 
 creds = None
@@ -49,12 +53,12 @@ def main():
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
-
+    # socket.setdefaulttimeout(600)  # set timeout to 10 minutes
     service = build('drive', 'v3', credentials=creds)
 
 def folderToZip():
     print("Zipping Folder from " + folder_absolute_path)
-    shutil.make_archive(zip_path+'\\'+folder_name , 'zip', folder_absolute_path)   
+    shutil.make_archive(zip_path+'\\'+folder_name_without_space , 'zip', folder_absolute_path)   
     
     #zipf = zipfile.ZipFile(zip_absolute_path, 'w', zipfile.ZIP_DEFLATED)
     #for root, dirs, files in os.walk(folder_absolute_path):

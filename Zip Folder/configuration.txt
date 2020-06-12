@@ -1,5 +1,4 @@
 {
-    "folder_name": "DATA2020",
     "folder_path": "E:\\STUDY\\Project\\Zip Folder\\temp",
     "zip_path": "E:\\STUDY\\Project\\Zip Folder\\temp"
 }

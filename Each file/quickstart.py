@@ -18,13 +18,18 @@ from apiclient import errors
 import httplib2
 import json
 
+import datetime
+now = datetime.datetime.now()
+
+
+
 with open('config.txt') as json_file:
     data = json.load(json_file)
     # print(data)
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive']
-folder_name = data['folder_name'] #'DATA2020'
+folder_name = "DATA " + str(now.year) # data['folder_name'] #'DATA2020'
 folder_path = data['path'] #r'E:\STUDY\Project\new'
 creds = None
 service = None
@@ -149,7 +154,9 @@ def downloadFile(file_name, file_id,filepath, total_files, count):
     while done is False:
         try:
             status, done = downloader.next_chunk()
-            print("Downloaded: "+ '%20s  %4s of %s' % (file_name,  count,  total_files))#+" %d%%." % int(status.progress() * 100))
+            if status:
+                print("Uploaded %d%%." % int(status.progress() * 100))
+            print("Downloaded: "+ '%20s  %4s of %s' % (file_name,  count,  total_files))#+" %d%%." % int(status.progress() * 100))            
         except errors.HttpError:
             # done = True
             print("Error While Downloading: " + file_name)
